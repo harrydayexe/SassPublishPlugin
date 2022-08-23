@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5
 
 /**
 *  Sass-plugin for Publish
@@ -10,6 +10,7 @@ import PackageDescription
 
 let package = Package(
     name: "SassPublishPlugin",
+    platforms: [.macOS(.v12)],
     products: [
         .library(
             name: "SassPublishPlugin",
@@ -23,11 +24,17 @@ let package = Package(
     targets: [
         .target(
             name: "SassPublishPlugin",
-            dependencies: ["Sass", "Publish"]
+            dependencies: [
+                .product(name: "Sass", package: "Swift-Sass"),
+                .product(name: "Publish", package: "publish")
+            ]
         ),
         .testTarget(
             name: "SassPublishPluginTests",
-            dependencies: ["SassPublishPlugin"]
+            dependencies: ["SassPublishPlugin"],
+            exclude: [
+                "styles.sass"
+            ]
         ),
     ]
 )
